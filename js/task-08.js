@@ -1,13 +1,13 @@
 document.querySelector(".login-form").addEventListener("submit", function(event) {
     event.preventDefault();
 
-    var emailInput = this.elements.email;
-    var passwordInput = this.elements.password;
+    let emailInput = this.elements.email;
+    let passwordInput = this.elements.password;
 
     if (emailInput.value === "" || passwordInput.value === "") {
         alert ('Будь ласка, заповніть всі поля.');
     } else {
-        var formData = {
+        let formData = {
             email: emailInput.value,
             password: passwordInput.value
         };
