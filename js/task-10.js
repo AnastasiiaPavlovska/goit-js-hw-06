@@ -4,33 +4,44 @@ function getRandomHexColor() {
     .padStart(6, 0)}`;
 }
 
-const input = document.querySelector("input");
-const createButton = document.querySelector("[data-create]");
-const destroyButton = document.querySelector("[data-destroy]");
-const boxesContainer = document.getElementById('boxes');
+const inputEl = document.querySelector("input");
+const boxesEl = document.querySelector("#boxes");
+const createEl = document.querySelector("[data-create]");
+const destroyEl = document.querySelector("[data-destroy]");
+let amount;
 
-
-createButton.addEventListener("click", createBoxes);
-destroyButton.addEventListener("click", destroyBoxes);
-
-function createBoxes() {
-  const amount = parseInt(input.value);
-  
-  destroyBoxes();
-
+const createBoxes = (amount) => {
   let size = 30;
-  for (let i = 0; i < amount; i++) {
-    const box = document.createElement("div");
-    box.style.width = size + "px";
-    box.style.height = size + "px";
-    box.style.backgroundColor = getRandomHexColor();
+  let stringDiv = "";
 
-    boxesContainer.appendChild(box);
-
+  for (let i = 0; i < amount; i += 1) {
+    stringDiv += `<div style="width: ${size}px; height: ${size}px; border-radius: 50%; align-self: center; background-color: ${getRandomHexColor()};"></div>`;
     size += 10;
   }
-}
+  boxesEl.insertAdjacentHTML("afterbegin", stringDiv);
+};
 
-function destroyBoxes() {
-  boxesContainer.innerHTML = "";
-}
+createEl.addEventListener("click", () => {
+  boxesEl.innerHTML = "";
+  amount = inputEl.value;
+
+  if (inputEl.value !== "" && inputEl.value < 101) {
+    createBoxes(amount);
+    inputEl.value = "";
+  } else {
+    boxesEl.innerHTML = "";
+    inputEl.value = "";
+    alert("Введіть число від 1 до 100");
+  }
+});
+
+destroyEl.addEventListener("click", () => {
+  inputEl.value === "" && boxesEl.innerHTML === ""
+    ? alert("Введіть число від 1 до 100")
+    : (boxesEl.innerHTML = ""),
+    (inputEl.value = "");
+});
+
+boxesEl.style.display = "flex";
+boxesEl.style.flexWrap = "wrap";
+boxesEl.style.gap = "10px";
